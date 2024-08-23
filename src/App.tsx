@@ -12,7 +12,6 @@ function App() {
     const newTable = table.map(row => [...row])
     newTable[i][j] = value
     setTable(newTable)
-    console.log(newTable)
   }
 
   return (
