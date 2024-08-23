@@ -1,0 +1,53 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#root {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.table-container {
+  padding: 3rem 0;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+tbody {
+  line-height: 0;
+}
+
+td {
+  border: .5px solid #cccccc;
+}
+
+input {
+  cursor: default;
+  border-radius: 0;
+  border: none;
+  background-color: #fff;
+  color: #333;
+  padding: .1rem;
+}
+
+input:focus {
+  outline: none;
+  border-color: #4e91e9;
+}
+
+th, .rows-keys {
+  font-weight: normal;
+  background-color: #eeeeee;
+  color: #000;
+  border: 1px solid #cccccc;
+}
+
+.rows-keys {
+  text-align: center;
+  width: 8rem;
+}
