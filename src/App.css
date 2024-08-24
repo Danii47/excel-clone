@@ -5,14 +5,12 @@
 }
 
 #root {
+  width: max-content;
   height: 100vh;
   display: flex;
-  justify-content: center;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-.table-container {
-  padding: 3rem 0;
-}
 
 table {
   border-collapse: collapse;
@@ -24,30 +22,133 @@ tbody {
 
 td {
   border: .5px solid #cccccc;
+  position: relative;
+}
+
+input:focus:not(.is-typing)+.input-circle {
+  position: absolute;
+  display: block;
+  bottom: -5px;
+  right: -5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid #76a1e4;
+  background-color: #1a73e8;
+  cursor: pointer;
+  z-index: 1;
 }
 
 input {
+  position: relative;
   cursor: default;
   border-radius: 0;
   border: none;
   background-color: #fff;
   color: #333;
-  padding: .1rem;
+  padding: .2rem .3rem;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  caret-color: transparent;
+}
+
+input.is-typing {
+  caret-color: auto;
+}
+
+input:focus.is-typing {
+  outline-color: #a8c7fa;
+  cursor: text;
+}
+
+input:focus.is-typing+.input-circle {
+  background-color: #a8c7fa;
+  display: none;
 }
 
 input:focus {
-  outline: none;
-  border-color: #4e91e9;
+  box-shadow: inset 0 0 0 2px #1a73e8;
+  outline: 2px solid transparent;
+  z-index: 1;
+
 }
 
-th, .rows-keys {
+th,
+.rows-keys {
   font-weight: normal;
   background-color: #eeeeee;
   color: #000;
   border: 1px solid #cccccc;
+  padding: 0px 10px;
+  font-size: .9rem;
 }
 
 .rows-keys {
   text-align: center;
-  width: 8rem;
+  width: 46px;
+  height: 21px;
+}
+
+th {
+  position: relative;
+}
+
+th.is-selected,
+.rows-keys.is-selected {
+  background-color: #d3e3fd;
+  font-weight: bold;
+}
+
+.resize-column-div {
+  position: absolute;
+  right: -4.5px;
+  bottom: 0;
+  width: 8px;
+  height: 100%;
+  cursor: col-resize;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.resize-column-div-borders {
+  display: none;
+  background-color: rgb(60, 60, 60);
+  height: 15px;
+  width: 2px;
+
+  border-radius: 999px;
+}
+
+.resize-column-div:hover .resize-column-div-borders {
+  display: flex;
+}
+
+.resize-row-div {
+  position: absolute;
+  left: 0;
+  bottom: -4.5px;
+  width: 100%;
+  height: 8px;
+  cursor: row-resize;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.resize-row-div-borders {
+  display: none;
+  background-color: rgb(60, 60, 60);
+  width: 15px;
+  height: 2px;
+
+  border-radius: 999px;
+}
+
+.resize-row-div:hover .resize-row-div-borders {
+  display: flex;
 }
