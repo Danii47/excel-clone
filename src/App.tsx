@@ -1,4 +1,4 @@
-import { MouseEvent, useRef, useState } from 'react'
+import { MouseEvent, useEffect, useRef, useState } from 'react'
 import './App.css'
 
 const WIDTH = 10
@@ -12,6 +12,49 @@ function App() {
   const resizingColumn = useRef<number | null>(null)
   const resizingRow = useRef<number | null>(null)
 
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  })
+
+  const handleInputFocus = (i: number, j: number) => {
+    if (inputSelected) {
+      document.querySelectorAll("input")[inputSelected.i * WIDTH + inputSelected.j].classList.remove("is-typing")
+      document.querySelectorAll("th")[inputSelected.j + 1].classList.remove("is-selected")
+      document.querySelectorAll("tr")[inputSelected.i + 1].querySelectorAll("td")[0].classList.remove("is-selected")
+    }
+    document.querySelectorAll("th")[j + 1].classList.add("is-selected")
+    document.querySelectorAll("tr")[i + 1].querySelectorAll("td")[0].classList.add("is-selected")
+
+    const inputElement = document.querySelectorAll("input")[i * WIDTH + j]
+    inputElement.focus()
+    
+    setInputSelected({ i, j });
+  }
+
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === "ArrowDown" || event.key === "Enter") {
+      const i = inputSelected.i + 1
+      if (i < HEIGHT) {
+        handleInputFocus(i, inputSelected.j)
+      }
+    } else if (event.key === "ArrowUp") {
+      const i = inputSelected.i - 1
+      if (i >= 0) {
+        handleInputFocus(i, inputSelected.j)
+      }
+    } else if (event.key === "ArrowRight") {
+      const j = inputSelected.j + 1
+      if (j < WIDTH) {
+        handleInputFocus(inputSelected.i, j)
+      }
+    } else if (event.key === "ArrowLeft") {
+      const j = inputSelected.j - 1
+      if (j >= 0) {
+        handleInputFocus(inputSelected.i, j)
+      }
+    }
+  }
 
   const handleChangeCell = (event: React.ChangeEvent<HTMLInputElement>, i: number, j: number) => {
     const target = event.target
@@ -24,17 +67,7 @@ function App() {
     setTable(newTable)
   }
 
-  const handleInputFocus = (i: number, j: number) => {
-    if (inputSelected) {
-      document.querySelectorAll("input")[inputSelected.i * WIDTH + inputSelected.j].classList.remove("is-typing")
-      document.querySelectorAll("th")[inputSelected.j + 1].classList.remove("is-selected")
-      document.querySelectorAll("tr")[inputSelected.i + 1].querySelectorAll("td")[0].classList.remove("is-selected")
-    }
-    document.querySelectorAll("th")[j + 1].classList.add("is-selected")
-    document.querySelectorAll("tr")[i + 1].querySelectorAll("td")[0].classList.add("is-selected")
-
-    setInputSelected({ i, j });
-  }
+  
   
   const handleMouseDownColumn = (column: number) => {
     resizingColumn.current = column
