@@ -29,7 +29,7 @@ function App() {
     const inputElement = document.querySelectorAll("input")[i * WIDTH + j]
     inputElement.focus()
     
-    setInputSelected({ i, j });
+    setInputSelected({ i, j })
   }
 
   const handleKeyDown = (event: KeyboardEvent) => {
@@ -67,8 +67,6 @@ function App() {
     setTable(newTable)
   }
 
-  
-  
   const handleMouseDownColumn = (column: number) => {
     resizingColumn.current = column
     document.addEventListener('mousemove', handleMouseMoveColumn as unknown as EventListener)
@@ -150,12 +148,18 @@ function App() {
                   </div>
                 </td>
                 {
-                  row.map((cell, j) => (
-                    <td key={j} className="cell" style={{ width: `${columnWidths[j]}px`, height: `${rowHeights[i]}px` }}>
-                      <input type="text" value={cell ?? ''} onClick={() => handleInputFocus(i, j)} onChange={(event) => handleChangeCell(event, i, j)} onDoubleClick={(event: React.MouseEvent<HTMLInputElement>) => handleChangeCell(event as unknown as React.ChangeEvent<HTMLInputElement>, i, j)} />
-                      <span className="input-circle"></span>
-                    </td>
-                  ))
+                  row.map((cell, j) => {
+                    return (
+
+                      <td key={j} className="cell" style={{ width: `${columnWidths[j]}px`, height: `${rowHeights[i]}px` }}>
+
+                        <input type="text" value={cell ?? ""} onClick={() => handleInputFocus(i, j)} onChange={(event) => handleChangeCell(event, i, j)} onDoubleClick={(event: React.MouseEvent<HTMLInputElement>) => handleChangeCell(event as unknown as React.ChangeEvent<HTMLInputElement>, i, j)} />
+                        <span className="input-circle"></span>
+                      </td>
+
+                    )
+                  })
+
                 }
               </tr>
             ))
